@@ -51,14 +51,11 @@ class MatchService
 
     public function importMatchCsvRow(array $matchData)
     {
-        $hash = implode(',', $matchData);
+        $hash = md5(implode(',', $matchData));
         $match = $this->repo->query()
                             ->pushPipe(new Query\Match\HashIs($hash))
-                            ->pushPipe(new Query\First)
+                            ->pushPipe(new Query\First())
                             ->execute();
-
-        echo(get_class($match));
-        die();
 
         if (!$match) {
             $characters = [
@@ -66,10 +63,10 @@ class MatchService
                 1 => $this->findCharacterByNameOrCreate($matchData[1])
             ];
     
-            $winner = &$characters[intval($matchData[2])];
-            $loser = &$characters[intval($matchData[2] == 0 ? 0 : 1)];
-            $crowd_fav = &$characters[intval($matchData[9])];
-            $illum_fav = &$characters[intval($matchData[10])];
+            $winner = $characters[intval($matchData[2])];
+            $loser = $characters[intval($matchData[2] == 0 ? 1 : 0)];
+            $crowd_fav = (intval($matchData[9]) <= 1) ? $characters[intval($matchData[9])] : null;
+            $illum_fav = (intval($matchData[10]) <= 1) ? $characters[intval($matchData[10])] : null;
 
             $winner->wins++;
             $loser->losses++;
@@ -83,8 +80,8 @@ class MatchService
                 'character_a_id' => $characters[0]->id,
                 'character_b_id' => $characters[1]->id,
                 'character_winner_id' => $winner->id,
-                'character_crowd_favour_id' => $crowd_fav->id,
-                'character_illum_favour_id' => $illum_fav->id,
+                'character_crowd_favour_id' => $crowd_fav ? $crowd_fav->id : 0,
+                'character_illum_favour_id' => $illum_fav ? $illum_fav->id : 0,
                 'character_a_bet_return' => 0,
                 'character_b_bet_return' => 0,
                 'strategy' => $matchData[3],
@@ -97,6 +94,8 @@ class MatchService
                 'hash' => $hash
             ]);
         }
+
+        $this->repo->persist($match);
 
         return $match;
     }

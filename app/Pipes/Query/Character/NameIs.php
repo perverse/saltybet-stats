@@ -16,6 +16,6 @@ class NameIs extends QueryPipe
 
     public function handle($builder, Closure $next)
     {
-        return $builder->where('name', '=', $this->name);
+        return $next($builder->where('name', '=', $this->name));
     }
 }

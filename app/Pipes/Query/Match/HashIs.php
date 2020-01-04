@@ -16,6 +16,6 @@ class HashIs extends QueryPipe
 
     public function handle($builder, Closure $next)
     {
-        return $builder->where('hash', '=', $this->hash);
+        return $next($builder->where('hash', '=', $this->hash));
     }
 }
