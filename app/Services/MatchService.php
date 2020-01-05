@@ -6,6 +6,7 @@ use App\Repositories\MatchRepository;
 use App\Repositories\CharacterRepository;
 use App\Pipes\Query;
 use Carbon\Carbon;
+use Arr;
 
 class MatchService
 {
@@ -98,5 +99,29 @@ class MatchService
         $this->repo->persist($match);
 
         return $match;
+    }
+
+    public function fetch($page = 1, $limit = 25, $filters = [])
+    {
+        $query = $this->repo->query()
+                            ->pushPipe(new Query\Offset(($page - 1) * $limit))
+                            ->pushPipe(new Query\Limit($limit))
+                            ->pushPipe(new Query\Match\WithCharacters);
+
+        if ($character = Arr::get($filters, 'character', false)) {
+            $query->pushPipe(new Query\Match\HasCharacterLike($character));
+        }
+
+        return $query->pushPipe(new Query\Fetch)
+                     ->execute();
+    }
+
+    public function find($id)
+    {
+        $query = $this->repo->query()
+                            ->pushPipe(new Query\IdIs($id));
+        
+        return $query->pushPipe(new Query\First)
+                     ->execute();
     }
 }

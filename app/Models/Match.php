@@ -36,7 +36,7 @@ class Match extends Model
 
     public function character_b()
     {
-        return $this->belongsTo(Character::class, 'character_b_d', 'id');
+        return $this->belongsTo(Character::class, 'character_b_id', 'id');
     }
 
     public function winner()

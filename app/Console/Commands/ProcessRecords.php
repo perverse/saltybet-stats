@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\MatchService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
 
 class ProcessRecords extends Command
 {
@@ -44,6 +45,13 @@ class ProcessRecords extends Command
         fclose($handle);
     }
 
+    protected function validator($data)
+    {
+        return Validator::make($data, [
+            'date' => 'date'
+        ]);
+    }
+
     /**
      * Execute the console command.
      *
@@ -55,9 +63,15 @@ class ProcessRecords extends Command
 
         foreach ($this->generator(storage_path('app/imports/' . $this->argument('filename'))) as $row) {
             $count++;
-            $match = $this->service->importMatchCsvRow($row);
-
-            $this->info($count . ' | Created match ' . $match->id . ' with characters ' . $match->character_a_id . ' and ' . $match->character_b_id);
+            if ($this->validator([
+                'date' => $row[11]
+            ])->fails()) {
+                $this->info($count . ' | Skipping record - invalid');
+            } else {
+                $match = $this->service->importMatchCsvRow($row);
+                $this->info($count . ' | Created match ' . $match->id . ' with characters ' . $match->character_a_id . ' and ' . $match->character_b_id);
+            }
+            
         }
     }
 }
