@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\MatchService;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class MatchController extends Controller
 {

@@ -3,12 +3,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import vuetify from './plugins/vuetify'
+import vuetify from '@/plugins/vuetify'
 import VueRouter from 'vue-router'
-import routes from './routes'
-import App from './components/App';
+import routes from '@/routes'
+import App from '@/components/App'
 
-window.Vue = require('vue');
+window.Vue = require('vue')
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,7 +26,7 @@ const router = new VueRouter({
     mode: 'history'
 });
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,4 +38,4 @@ const app = new Vue({
     vuetify,
     router,
     components: { App }
-}).$mount('app');
+}).$mount('app')

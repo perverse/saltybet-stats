@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\CharacterRepository;
 use App\Pipes\Query;
+use Arr;
 
 class CharacterService
 {
@@ -16,11 +17,13 @@ class CharacterService
 
     public function fetch($page = 1, $limit = 25, $filters = [])
     {
-        $query = $this->repo->query()
-                            ->pushPipe(new Query\Offset(($page - 1) * $limit))
-                            ->pushPipe(new Query\Limit($limit));
+        $query = $this->repo->query();
 
-        return $query->pushPipe(new Query\Fetch)
+        if ($character = Arr::get($filters, 'search', false)) {
+            $query->pushPipe(new Query\Character\NameLike($character));
+        }
+
+        return $query->pushPipe(new Query\Paginate($page, $limit))
                      ->execute();
     }
 

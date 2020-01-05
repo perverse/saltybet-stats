@@ -1,5 +1,5 @@
-import ExampleComponent from './components/pages/ExampleComponent';
+import CharactersPage from './components/pages/CharactersPage';
 
 export default [
-    { path: '/', component: ExampleComponent }
+    { path: '/', component: CharactersPage }
 ];

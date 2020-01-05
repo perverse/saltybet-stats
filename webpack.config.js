@@ -3,6 +3,11 @@ module.exports = {
   plugins: [
     new VuetifyLoaderPlugin(),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'resources/js/')
+    }
+  }
   /*
   module: {
     rules: [

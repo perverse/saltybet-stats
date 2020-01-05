@@ -19,7 +19,7 @@ class CharacterController extends Controller
 
     public function index()
     {
-        return $this->service->fetch($this->request->get('page', 1), $this->request->get('limit', 25), $this->request->get('filters', []));
+        return $this->service->fetch($this->request->get('page', 1), $this->request->get('limit', 25), json_decode($this->request->get('filters', "[]"), true));
     }
 
     public function find($id)

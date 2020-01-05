@@ -10,46 +10,50 @@
         <router-link to="/">
           <v-list-item link>
             <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
+              <v-icon>mdi-account-outline</v-icon>
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
+              <v-list-item-title>Characters</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
 
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-contact-mail</v-icon>
-          </v-list-item-action>
+        <router-link to="/matches">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-table</v-icon>
+            </v-list-item-action>
 
-          <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Matches</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
 
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar
       app
-      color="cyan"
+      color="black"
       dark
     >
       <v-spacer />
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Saltybets Stats</v-toolbar-title>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+      <v-container class="grey lighten-5">
+        <router-view></router-view>
+      </v-container>
     </v-content>
 
     <v-footer
-      color="cyan"
+      color="black"
       app
     >
       <v-spacer />
