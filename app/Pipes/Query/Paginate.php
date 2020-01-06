@@ -15,6 +15,8 @@ class Paginate extends QueryPipe
 
     public function handle($builder, Closure $next)
     {
-        return $next($builder->paginate($this->perPage, ['*'], 'page', $this->page));
+        $builder = $next($builder);
+
+        return $builder->paginate($this->perPage, ['*'], 'page', $this->page);
     }
 }

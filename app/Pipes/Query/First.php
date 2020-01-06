@@ -9,6 +9,8 @@ class First extends QueryPipe
 {
     public function handle($builder, Closure $next)
     {
-        return $next($builder->first());
+        $builder = $next($builder);
+
+        return $builder->first();
     }
 }

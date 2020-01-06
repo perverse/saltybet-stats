@@ -78,7 +78,7 @@ export default {
     async getDataFromApi ({ sortBy, sortDesc, page, itemsPerPage, search }) {
       this.loading = true
 
-      return await CharacterService.fetch({ 
+      return CharacterService.fetch({ 
         page,
         limit: itemsPerPage,
         sortBy,
@@ -91,7 +91,7 @@ export default {
 
         return {
           items: data.data,
-          total: data.total
+          total: data.meta.total
         }
       })
     },

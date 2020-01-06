@@ -9,6 +9,8 @@ class Fetch extends QueryPipe
 {
     public function handle($builder, Closure $next)
     {
-        return $next($builder->get());
+        $builder = $next($builder);
+
+        return $builder->get();
     }
 }

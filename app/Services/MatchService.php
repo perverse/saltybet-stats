@@ -104,14 +104,14 @@ class MatchService
     public function fetch($page = 1, $limit = 25, $filters = [])
     {
         $query = $this->repo->query()
-                            ->pushPipe(new Query\Match\WithCharacters);
+                            ->pushPipe(new Query\Match\WithCharacters)
+                            ->pushPipe(new Query\Paginate($page, $limit));
 
         if ($character = Arr::get($filters, 'character', false)) {
             $query->pushPipe(new Query\Match\HasCharacterLike($character));
         }
 
-        return $query->pushPipe(new Query\Paginate($page, $limit))
-                     ->execute();
+        return $query->execute();
     }
 
     public function find($id)

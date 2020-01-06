@@ -17,14 +17,13 @@ class CharacterService
 
     public function fetch($page = 1, $limit = 25, $filters = [])
     {
-        $query = $this->repo->query();
+        $query = $this->repo->query()->pushPipe(new Query\Paginate($page, $limit));
 
         if ($character = Arr::get($filters, 'search', false)) {
             $query->pushPipe(new Query\Character\NameLike($character));
         }
 
-        return $query->pushPipe(new Query\Paginate($page, $limit))
-                     ->execute();
+        return $query->execute();
     }
 
     public function find($id)
