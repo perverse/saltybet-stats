@@ -107,6 +107,7 @@ class MatchService
         $query = $this->repo->query()
                             ->pushPipe(new Query\Match\WithCharacters)
                             ->pushPipe(new Query\Paginate($page, $limit))
+                            //->pushPipe(new Query\RawSql())
                             ->pushPipe(new Query\OrderBy($sortBy, $sortDirection));
 
         if ($character = Arr::get($filters, 'search', false)) {

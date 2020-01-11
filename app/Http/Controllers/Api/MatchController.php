@@ -23,7 +23,7 @@ class MatchController extends Controller
         return Resource\Full::collection($this->service->fetch(
             $this->request->get('page', 1),
             $this->request->get('limit', 25),
-            json_decode($this->request->get('filters', []), true),
+            json_decode($this->request->get('filters', '[]'), true),
             $this->request->get('sortBy', ['date'])[0],
             $this->request->get('sortDesc')[0] == 'false' ? 'ASC' : 'DESC'
         ));

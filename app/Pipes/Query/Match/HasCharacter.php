@@ -27,14 +27,21 @@ class HasCharacter extends QueryPipe
             });
         });
         */
-
+        /*
         $builder->join('characters as ca', 'ca.id', '=', 'matches.character_a_id')
                 ->join('characters as cb', 'cb.id', '=', 'matches.character_b_id')
                 ->where(function($query){
                     $query->where('ca.name', '=', $this->character)
                           ->orWhere('cb.name', '=', $this->character);
                 });
-        
+        */
+        $builder->from(\DB::raw('matches, characters'))
+                ->where(function($query){
+                    $query->where('matches.character_a_id', '=', \DB::raw('characters.id'))
+                          ->orWhere('matches.character_b_id', '=', \DB::raw('characters.id'));
+                })
+                ->where('characters.name', '=', $this->character);
+
         return $next($builder);
     }
 }
