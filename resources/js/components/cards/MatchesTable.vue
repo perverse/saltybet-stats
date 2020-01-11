@@ -16,9 +16,28 @@
       :options.sync="options"
       :server-items-length="totalMatches"
       :loading="loading"
-      class="elevation-1"
+      class="elevation-1 matches"
       :footer-props="footerProps"
+      show-expand
     >
+      <template v-slot:expanded-item="{ item }">
+        <td colspan="8" style="padding: 0px 16px;">
+          <v-container fill-height fluid>
+            <v-row no-gutters>
+              <v-col cols="12">
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="grey lighten-5"
+                >
+                  <character-summary :character-id="item.character_a.id"></character-summary>
+                  <character-summary :character-id="item.character_b.id"></character-summary>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
+        </td>
+      </template>
       <template v-slot:item.character_a="{ item }">
         <character-slot v-bind:character="item.character_a" v-bind:winner-id="item.winner.id"></character-slot>
       </template>
@@ -29,14 +48,26 @@
   </v-card>
 </template>
 
+<style lang="scss" scoped>
+  .matches {
+    .v-data-table {
+      td {
+        height: 36px;
+      }
+    }
+  }
+</style>
+
 <script>
 import MatchService from '@/services/MatchService'
 import CharacterSlot from '@/components/cards/MatchesTable/CharacterSlot'
+import CharacterSummary from '@/components/cards/CharacterSummary'
 import _ from 'lodash'
 
 export default {
   components: {
-    'character-slot': CharacterSlot
+    'character-slot': CharacterSlot,
+    'character-summary': CharacterSummary
   },
   data () {
     return {

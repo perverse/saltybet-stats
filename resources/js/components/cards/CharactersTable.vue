@@ -22,6 +22,16 @@
   </v-card>
 </template>
 
+<style lang="scss" scoped>
+  .characters {
+    .v-data-table {
+      td {
+        height: 36px;
+      }
+    }
+  }
+</style>
+
 <script>
 import CharacterService from '@/services/CharacterService';
 import _ from 'lodash';

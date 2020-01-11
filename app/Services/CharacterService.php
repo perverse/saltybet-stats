@@ -3,16 +3,19 @@
 namespace App\Services;
 
 use App\Repositories\CharacterRepository;
+use App\Services\MatchService;
 use App\Pipes\Query;
 use Arr;
 
 class CharacterService
 {
     protected $repo;
+    protected $match_service;
 
-    public function __construct(CharacterRepository $repo)
+    public function __construct(CharacterRepository $repo, MatchService $match_service)
     {
         $this->repo = $repo;
+        $this->match_service = $match_service;
     }
 
     public function fetch($page = 1, $limit = 25, $filters = [], $sortBy = 'name', $sortDirection='DESC')
@@ -31,7 +34,12 @@ class CharacterService
         $query = $this->repo->query()
                             ->pushPipe(new Query\IdIs($id));
         
-        return $query->pushPipe(new Query\First)
-                     ->execute();
+        $character = $query->pushPipe(new Query\First)
+                           ->execute();
+        
+        $matches = $this->match_service->fetch(1, 15, ['search' => $character->name]);
+        $character->setRelation('matches', $matches);
+
+        return $character;
     }
 }

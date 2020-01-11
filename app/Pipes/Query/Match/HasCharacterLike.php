@@ -16,6 +16,7 @@ class HasCharacterLike extends QueryPipe
 
     public function handle($builder, Closure $next)
     {
+        /*
         $builder->where(function($query){
             $query->whereHas('character_a', function($query){
                 $query->where('name', 'LIKE', '%' . $this->character . '%');
@@ -25,6 +26,14 @@ class HasCharacterLike extends QueryPipe
                 $query->where('name', 'LIKE', '%' . $this->character . '%');
             });
         });
+        */
+
+        $builder->join('characters as ca', 'ca.id', '=', 'matches.character_a_id')
+                ->join('characters as cb', 'cb.id', '=', 'matches.character_b_id')
+                ->where(function($query){
+                    $query->where('ca.name', 'LIKE', '%' . $this->character . '%')
+                          ->orWhere('cb.name', 'LIKE', '%' . $this->character . '%');
+                });
 
         return $next($builder);
     }

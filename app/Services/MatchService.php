@@ -109,8 +109,6 @@ class MatchService
                             ->pushPipe(new Query\Paginate($page, $limit))
                             ->pushPipe(new Query\OrderBy($sortBy, $sortDirection));
 
-        \Log::info($sortBy . ' ' . $sortDirection);
-
         if ($character = Arr::get($filters, 'search', false)) {
             $characters = explode(':', $character);
 
