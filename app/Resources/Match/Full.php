@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Resources\Character;
+namespace App\Resources\Match;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Resoures\Character\Full as CharacterResource;
+use App\Resources\Character\Full as CharacterResource;
 
 class Full extends JsonResource
 {

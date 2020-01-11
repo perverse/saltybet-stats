@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/{catchall?}', function () {
     return view('welcome');
 });

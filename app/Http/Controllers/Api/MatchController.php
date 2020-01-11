@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\MatchService;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
+use App\Resources\Match as Resource;
 
 class MatchController extends Controller
 {
@@ -20,7 +20,7 @@ class MatchController extends Controller
 
     public function index()
     {
-        return $this->service->fetch($this->request->get('page', 1), $this->request->get('limit', 25), $this->request->get('filters', []));
+        return Resource\Full::collection($this->service->fetch($this->request->get('page', 1), $this->request->get('limit', 25), json_decode($this->request->get('filters', []), true)));
     }
 
     public function find($id)

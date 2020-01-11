@@ -107,8 +107,14 @@ class MatchService
                             ->pushPipe(new Query\Match\WithCharacters)
                             ->pushPipe(new Query\Paginate($page, $limit));
 
-        if ($character = Arr::get($filters, 'character', false)) {
-            $query->pushPipe(new Query\Match\HasCharacterLike($character));
+        if ($character = Arr::get($filters, 'search', false)) {
+            $characters = explode(':', $character);
+
+            if (count($characters) > 1) {
+                $query->pushPipe(new Query\Match\HasCharactersLike($characters[0], $characters[1]));
+            } else {
+                $query->pushPipe(new Query\Match\HasCharacterLike($characters[0]));
+            }
         }
 
         return $query->execute();
