@@ -26,8 +26,8 @@
             <v-row no-gutters>
               <v-col cols="12">
                 <v-row
-                  align="center"
-                  justify="center"
+                  :align="'start'"
+                  :justify="'center'"
                   class="grey lighten-5"
                 >
                   <character-summary :character-id="item.character_a.id"></character-summary>
