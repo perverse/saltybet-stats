@@ -35,7 +35,8 @@ class HasCharacter extends QueryPipe
                           ->orWhere('cb.name', '=', $this->character);
                 });
         */
-        $builder->from(\DB::raw('matches, characters'))
+        $builder->select(\DB::raw('matches.*'))
+                ->from(\DB::raw('matches, characters'))
                 ->where(function($query){
                     $query->where('matches.character_a_id', '=', \DB::raw('characters.id'))
                           ->orWhere('matches.character_b_id', '=', \DB::raw('characters.id'));
