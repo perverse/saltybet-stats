@@ -111,9 +111,9 @@ class MatchService
             $characters = explode(':', $character);
 
             if (count($characters) > 1) {
-                $query->pushPipe(new Query\Match\HasCharactersLike($characters[0], $characters[1]));
+                $query->pushPipe(new Query\Match\HasCharacters($characters[0], $characters[1]));
             } else {
-                $query->pushPipe(new Query\Match\HasCharacterLike($characters[0]));
+                $query->pushPipe(new Query\Match\HasCharacter($characters[0]));
             }
         }
 
