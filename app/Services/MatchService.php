@@ -92,7 +92,8 @@ class MatchService
                 'odds' => $matchData[7],
                 'time' => $matchData[8],
                 'date' => $date->format('Y-m-d H:i:s'),
-                'hash' => $hash
+                'hash' => $hash,
+                'characters_index' => $characters[0]->name . '^' . $characters[1]->id
             ]);
         }
 

@@ -24,7 +24,8 @@ class Match extends Model
         'odds',
         'time',
         'date',
-        'hash'
+        'hash',
+        'characters_index'
     ];
 
     protected $dates = ['date'];
