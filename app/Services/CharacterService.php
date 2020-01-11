@@ -15,9 +15,9 @@ class CharacterService
         $this->repo = $repo;
     }
 
-    public function fetch($page = 1, $limit = 25, $filters = [])
+    public function fetch($page = 1, $limit = 25, $filters = [], $sortBy = 'name', $sortDirection='DESC')
     {
-        $query = $this->repo->query()->pushPipe(new Query\Paginate($page, $limit));
+        $query = $this->repo->query()->pushPipe(new Query\Paginate($page, $limit))->pushPipe(new Query\OrderBy($sortBy, $sortDirection));
 
         if ($character = Arr::get($filters, 'search', false)) {
             $query->pushPipe(new Query\Character\NameLike($character));

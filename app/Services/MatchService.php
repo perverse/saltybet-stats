@@ -102,11 +102,14 @@ class MatchService
         return $match;
     }
 
-    public function fetch($page = 1, $limit = 25, $filters = [])
+    public function fetch($page = 1, $limit = 25, $filters = [], $sortBy = 'date', $sortDirection='DESC')
     {
         $query = $this->repo->query()
                             ->pushPipe(new Query\Match\WithCharacters)
-                            ->pushPipe(new Query\Paginate($page, $limit));
+                            ->pushPipe(new Query\Paginate($page, $limit))
+                            ->pushPipe(new Query\OrderBy($sortBy, $sortDirection));
+
+        \Log::info($sortBy . ' ' . $sortDirection);
 
         if ($character = Arr::get($filters, 'search', false)) {
             $characters = explode(':', $character);
