@@ -59,6 +59,7 @@ class ProcessRecords extends Command
      */
     public function handle()
     {
+        \DB::disableQueryLog();
         $count = 0;
 
         foreach ($this->generator(storage_path('app/imports/' . $this->argument('filename'))) as $row) {
@@ -69,7 +70,7 @@ class ProcessRecords extends Command
                 $this->info($count . ' | Skipping record - invalid');
             } else {
                 $match = $this->service->importMatchCsvRow($row);
-                $this->info($count . ' | Created match ' . $match->id . ' with characters ' . $match->character_a_id . ' and ' . $match->character_b_id);
+                $this->info($count . ' | Created match ' . $match->id . ' with characters ' . $match->character_a_id . ' and ' . $match->character_b_id . "(" . memory_get_usage() . ")");
             }
             
         }
