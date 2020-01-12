@@ -29,7 +29,7 @@ class CharacterService
         return $query->execute();
     }
 
-    public function find($id)
+    public function find($id, $filters = [])
     {
         $query = $this->repo->query()
                             ->pushPipe(new Query\IdIs($id));
@@ -37,8 +37,10 @@ class CharacterService
         $character = $query->pushPipe(new Query\First)
                            ->execute();
         
-        $matches = $this->match_service->fetch(1, 15, ['search' => $character->name]);
-        $character->setRelation('matches', $matches);
+        if (Arr::get($filters, 'include_matches', true)) {
+            $matches = $this->match_service->fetch(1, 15, ['search' => $character->name]);
+            $character->setRelation('matches', $matches);
+        }
 
         return $character;
     }

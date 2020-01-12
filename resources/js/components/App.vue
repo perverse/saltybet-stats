@@ -4,6 +4,7 @@
       v-model="drawer"
       app
       right
+      :disable-resize-watcher="true"
     >
       <v-list dense>
 
@@ -14,19 +15,19 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Characters</v-list-item-title>
+              <v-list-item-title>Matches</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
 
-        <router-link to="/matches">
+        <router-link to="/characters">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-table</v-icon>
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Matches</v-list-item-title>
+              <v-list-item-title>Characters</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -47,7 +48,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container class="grey lighten-5">
+      <v-container>
         <router-view></router-view>
       </v-container>
     </v-content>

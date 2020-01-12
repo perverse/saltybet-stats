@@ -22,17 +22,16 @@
     >
       <template v-slot:expanded-item="{ item }">
         <td colspan="8" style="padding: 0px 16px;">
-          <v-container fill-height fluid>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <v-row
-                  :align="'start'"
-                  :justify="'center'"
-                  class="grey lighten-5"
-                >
-                  <character-summary :character-id="item.character_a.id"></character-summary>
-                  <character-summary :character-id="item.character_b.id"></character-summary>
-                </v-row>
+          <v-container fill-height fluid :align="'start'">
+            <v-row
+              :align="'start'"
+              :justify="'center'"
+              class="lighten-5">
+              <v-col cols="12" md="6" xl="4">
+                <character-summary :character-id="item.character_a.id"></character-summary>
+              </v-col>
+              <v-col cols="12" md="6" xl="4">
+                <character-summary :character-id="item.character_b.id"></character-summary>
               </v-col>
             </v-row>
           </v-container>
@@ -43,6 +42,11 @@
       </template>
       <template v-slot:item.character_b="{ item }">
         <character-slot v-bind:character="item.character_b" v-bind:winner-id="item.winner.id"></character-slot>
+      </template>
+      <template v-slot:item.date="{ item }">
+        <td>
+          {{formatDate(item.date)}}
+        </td>
       </template>
     </v-data-table>
   </v-card>
@@ -63,6 +67,7 @@ import MatchService from '@/services/MatchService'
 import CharacterSlot from '@/components/cards/MatchesTable/CharacterSlot'
 import CharacterSummary from '@/components/cards/CharacterSummary'
 import _ from 'lodash'
+import moment from 'moment';
 
 export default {
   components: {
@@ -151,6 +156,10 @@ export default {
       return Object.assign({
         search: this.search
       }, options);
+    },
+
+    formatDate (datestring) {
+      return moment(datestring, "YYYY-MM-DD HH-mm-ss").format("DD-MM-YYYY");
     }
   },
 }

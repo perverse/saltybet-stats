@@ -93,7 +93,7 @@ class MatchService
                 'time' => $matchData[8],
                 'date' => $date->format('Y-m-d H:i:s'),
                 'hash' => $hash,
-                'characters_index' => $characters[0]->name . '^' . $characters[1]->id
+                'characters_index' => $characters[0]->name . '^' . $characters[1]->name
             ]);
         }
 
