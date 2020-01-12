@@ -56,8 +56,20 @@
 </template>
 
 <style lang="scss" scoped>
-  ::v-deep .v-data-table__progress [role='progressbar'] {
-    position: absolute;
+  ::v-deep {
+    .v-data-table {
+      .v-data-table__progress [role='progressbar'] {
+        position: absolute;
+      }
+
+      tbody {
+        tr {
+          td {
+            padding: 0 8px;
+          }
+        }
+      }
+    }
   }
 </style>
 

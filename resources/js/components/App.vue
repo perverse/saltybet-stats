@@ -47,7 +47,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
-    <v-content>
+    <v-content class="grey darken-3">
       <v-container>
         <router-view></router-view>
       </v-container>
