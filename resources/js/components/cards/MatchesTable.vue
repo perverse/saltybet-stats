@@ -11,7 +11,7 @@
       ></v-text-field>
     </v-card-title>
     <v-data-table
-      :headers="headers"
+      :headers="computedHeaders"
       :items="matches"
       :options.sync="options"
       :server-items-length="totalMatches"
@@ -19,7 +19,8 @@
       class="elevation-1 matches"
       :footer-props="footerProps"
       show-expand
-    >
+      >
+
       <template v-slot:expanded-item="{ item }">
         <td colspan="8" style="padding: 0px 16px;">
           <v-container fill-height fluid :align="'start'">
@@ -37,28 +38,26 @@
           </v-container>
         </td>
       </template>
+
       <template v-slot:item.character_a="{ item }">
         <character-slot v-bind:character="item.character_a" v-bind:winner-id="item.winner.id"></character-slot>
       </template>
+
       <template v-slot:item.character_b="{ item }">
         <character-slot v-bind:character="item.character_b" v-bind:winner-id="item.winner.id"></character-slot>
       </template>
+
       <template v-slot:item.date="{ item }">
-        <td>
-          {{formatDate(item.date)}}
-        </td>
+        {{formatDate(item.date)}}
       </template>
+
     </v-data-table>
   </v-card>
 </template>
 
 <style lang="scss" scoped>
-  .matches {
-    .v-data-table {
-      td {
-        height: 36px;
-      }
-    }
+  ::v-deep .v-data-table__progress [role='progressbar'] {
+    position: absolute;
   }
 </style>
 
@@ -94,9 +93,9 @@ export default {
           value: 'character_b',
         },
         { text: 'Tier', value: 'tier' },
-        { text: 'Mode', value: 'mode' },
+        { text: 'Mode', value: 'mode', hide: 'mdAndDown' },
         { text: 'Odds', value: 'odds' },
-        { text: 'Fight Length', value: 'time' },
+        { text: 'Fight Length', value: 'time', hide: 'mdAndDown' },
         { text: 'Date', value: 'date' }
       ],
       footerProps: {
@@ -105,6 +104,11 @@ export default {
       },
       search: '',
       debounceGetData: null
+    }
+  },
+  computed: {
+    computedHeaders () {
+      return this.headers.filter(h => !h.hide || !this.$vuetify.breakpoint[h.hide])  
     }
   },
   watch: {

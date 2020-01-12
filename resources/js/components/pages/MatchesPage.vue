@@ -1,6 +1,6 @@
 <template>
-    <v-row>
-        <v-col>
+    <v-row justify="center">
+        <v-col xl="10">
             <matches-table></matches-table>
         </v-col>
     </v-row>
